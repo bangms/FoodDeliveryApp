@@ -4,27 +4,17 @@ import {
   Keyboard,
   StyleProp,
   ViewStyle,
-  KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
-const DismissKeyboardView: React.FC<{ style: StyleProp<ViewStyle> }> = ({
+const DismissKeyboardView: React.FC<{ style?: StyleProp<ViewStyle> }> = ({
   children,
   ...props
 }) => (
   <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-    {/*
-		<KeyboardAvoidingView {...props} style={props.style} behavior='position'>
-		안드로이드에서는 position / 아이폰에서는 padding 적용
-		아래 안드로이드, 아이폰 분기처리
-		*/}
-    <KeyboardAvoidingView
-      {...props}
-      style={props.style}
-      behavior={Platform.OS === 'android' ? undefined : 'padding'}
-    >
+    <KeyboardAwareScrollView {...props} style={props.style}>
       {children}
-    </KeyboardAvoidingView>
+    </KeyboardAwareScrollView>
   </TouchableWithoutFeedback>
 );
 
